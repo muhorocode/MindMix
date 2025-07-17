@@ -1,4 +1,6 @@
-/* select the html elements */
+//ensure html elements are fully loaded before running javascript
+document.addEventListener('DOMContentLoaded',()=>{
+
 const searchInput=document.getElementById('search-input')
 const searchButton=document.getElementById('search-button')
 const categoriesList=document.getElementById('categories-list')
@@ -9,7 +11,6 @@ const popularPostsContainer=document.getElementById('popular-posts')
 const latestArticlesContainer=document.getElementById('latest-articles')
 const toggleSound=new Audio('audio/toggle sound.wav')
 const noPosts=document.getElementById('no-posts-message')
-// select the form elements
 const writePostBtn=document.getElementById('write-post-btn')
 const writePostForm=document.getElementById('write-post-form')
 const titleInput=document.getElementById('post-title')
@@ -21,8 +22,18 @@ const imageUrl=document.getElementById('post-image-url')
   //trucks which post is being edited and if its null
 let editPostId=null
 
+//toggle function
+function toggleTheme(){
+    document.body.classList.toggle('dark-mode')
+    toggleSound.play()//play toggle sound
+
+    if(document.body.classList.contains('dark-mode')){
+        themeToggleButton.textContent='☀️'
+    }else{
+        themeToggleButton.textContent='🌙'
+    }
+}
 //the display categories function
-// render categories(reusable)
 function displayCategories(categories){
     categoriesList.innerHTML='' //to clear any existing items
 
@@ -31,7 +42,7 @@ function displayCategories(categories){
         const link=document.createElement('a')
 
         link.href='#'
-        link.textContent=categoryObj.name // an object {id,name}
+        link.textContent=categoryObj.name
 
         //filter posts when category link is clicked
 
@@ -48,7 +59,7 @@ function displayCategories(categories){
         categoriesList.appendChild(li)
     })
 }
-        //this function loads post into form for editing
+        //Function to load post into form for editing
 
  function loadPostIntoForm(post){
             titleInput.value=post.title
@@ -63,13 +74,23 @@ function displayCategories(categories){
             writePostBtn.style.display='none'// hide the write post button
             writePostForm.scrollIntoView({behavior:'smooth'})// smooth scroll to the form
         }
+   
+    //the delete function
+function deletePost(postId){
+   fetch(`http://localhost:3000/blogs/${postId}`, {
+    method:`DELETE`
+   })
+   .then(()=>{
+    fetchAndDisplayBlogPosts()//refresh after delete
+   })
+   .catch(error=>console.error('Error Deleting Post', error))
+}
 
 // display blog posts function
-//display blog posts(reusable) any container
 function displayBlogPosts(postsArray, container){
     container.innerHTML=''//clear container before adding posts
     if(postsArray.length===0){
-        noPosts.style.display='block'
+        noPosts.style.display='block'//to show no posts available yet
         return;//stops the function
     }else{
         noPosts.style.display='none'
@@ -88,7 +109,6 @@ function displayBlogPosts(postsArray, container){
         <button class='delete-btn'>Delete</button>`
 
         //edit button functionality
-
         const editbtn=card.querySelector('.edit-btn')
         editbtn.addEventListener('click', ()=>{
             loadPostIntoForm(post) //calls global function
@@ -134,34 +154,11 @@ function fetchAndDisplayBlogPosts(){
     .then(response=>response.json())
     .then(blogs=>{
         // display the latest 3 as 'popular' in sidebar
-
-        const popularPosts=blogs.slice(-3).reverse()//latest 3 posts
+        const popularPosts=blogs.slice(-3).reverse()//latest 3 posts starting with the currently added one
         displayBlogPosts(popularPosts, sideBarPopularContainer)//sidebar
         displayBlogPosts(blogs.reverse(), latestArticlesContainer)//main section
     })
     .catch(error=>console.error('Error Loading blog posts:', error))
-}
-
-//the delete function
-function deletePost(postId){
-   fetch(`http://localhost:3000/blogs/${postId}`, {
-    method:`DELETE`
-   })
-   .then(()=>{
-    fetchAndDisplayBlogPosts()//refresh after delete
-   })
-   .catch(error=>console.error('Error Deleting Post', error))
-}
-//toggle function
-function toggleTheme(){
-    document.body.classList.toggle('dark-mode')
-    toggleSound.play()//play toggle sound
-
-    if(document.body.classList.contains('dark-mode')){
-        themeToggleButton.textContent='☀️'
-    }else{
-        themeToggleButton.textContent='🌙'
-    }
 }
 
 //event listener for theme toggle
@@ -211,7 +208,6 @@ writePostForm.addEventListener('submit', (e)=>{
         }
 
     //when we are in edit mode, do this
-    
     if(editPostId){
         fetch(`http://localhost:3000/blogs/${editPostId}`, {
             method:'PUT',
@@ -247,3 +243,5 @@ writePostForm.addEventListener('submit', (e)=>{
       .catch(error=>console.error('Error Creating New Post', error))
 }
 })
+})
+
