@@ -1,3 +1,14 @@
+html {
+  scroll-behavior: smooth;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+
 *{
    margin: 0;
    padding: 0;
@@ -85,6 +96,7 @@ aside{
 
 section{
     margin-bottom: 2rem;
+    scroll-margin-top: 80px;
 }
 
 #popular-posts,
@@ -104,6 +116,13 @@ section{
     
 }
 
+.blog-card h3{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 .blog-card:hover{
     transform: scale(1.02);
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
@@ -121,6 +140,10 @@ section{
 .edit-btn,
 .delete-btn{
     cursor: pointer;
+    min-height: 44px;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    margin-right: 0.5rem;
 }
 
 #write-post-form{
@@ -207,4 +230,90 @@ body.dark-mode a{
 .blog-card img {
     border-radius: 8px;
     margin-bottom: 10px;
+}
+
+.blog-card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Responsive layout for mobile screens */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  nav a{
+    padding: 0.5rem 0;
+    display: block;
+  }
+
+  .search-wrapper {
+    width: 100%;
+  }
+
+  nav ul {
+    flex-direction: column;
+    width: 100%;
+    padding-left: 0;
+  }
+
+  main {
+    flex-direction: column;
+    margin: 1rem;
+  }
+
+  aside {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  #main-content {
+    width: 100%;
+  }
+
+  #write-post-form {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  #search-input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #write-post-btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  #cancel-btn {
+    width: 100%;
+    float: none;
+    margin-top: 1rem;
+  }
+
+  .blog-card {
+    font-size: 0.95rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.2rem;
+  }
+
+  .blog-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
 }
