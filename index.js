@@ -47,7 +47,7 @@ function displayCategories(categories){
         //filter posts when category link is clicked
 
         link.addEventListener('click',()=>{
-            fetch('http://localhost:3000/blogs')
+            fetch('https://mindmix-api.onrender.com/blogs')
             .then(response=>response.json())
             .then(blogs=>{
                 const filteredPosts=categoryObj.name==='All'?blogs:blogs.filter(post=>post.category.toLowerCase()===categoryObj.name.toLowerCase())
@@ -77,7 +77,7 @@ function displayCategories(categories){
    
     //the delete function
 function deletePost(postId){
-   fetch(`http://localhost:3000/blogs/${postId}`, {
+   fetch(`https://mindmix-api.onrender.com/blogs/${postId}`, {
     method:`DELETE`
    })
    .then(()=>{
@@ -126,7 +126,7 @@ function displayBlogPosts(postsArray, container){
 //the search function
 function handleSearch(){
     const query=searchInput.value.trim().toLowerCase()
-    fetch('http://localhost:3000/blogs')
+    fetch('https://mindmix-api.onrender.com/blogs')
     .then(response=>response.json())
     .then(blogs=>{
         const filteredPosts=blogs.filter(post=>
@@ -142,7 +142,7 @@ function handleSearch(){
 // the fetch functions
 // fetch categories from json server
 function fetchAndDisplayCategories(){
-    fetch('http://localhost:3000/categories')
+    fetch('https://mindmix-api.onrender.com/categories')
     .then(response=>response.json())
     .then(categories=>displayCategories(categories))
     .catch(error=>console.error('Error Loading Categories:', error))
@@ -150,7 +150,7 @@ function fetchAndDisplayCategories(){
 
 //fetch blog posts from json server
 function fetchAndDisplayBlogPosts(){
-    fetch('http://localhost:3000/blogs')
+    fetch('https://mindmix-api.onrender.com/blogs')
     .then(response=>response.json())
     .then(blogs=>{
         // display the latest 3 as 'popular' in sidebar
@@ -209,7 +209,7 @@ writePostForm.addEventListener('submit', (e)=>{
 
     //when we are in edit mode, do this
     if(editPostId){
-        fetch(`http://localhost:3000/blogs/${editPostId}`, {
+        fetch(`https://mindmix-api.onrender.com/blogs/${editPostId}`, {
             method:'PUT',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify(newPost)
@@ -226,7 +226,7 @@ writePostForm.addEventListener('submit', (e)=>{
            .catch(error=>console.error('Error updating the post', error))
     }else{
 
-    fetch('http://localhost:3000/blogs',{
+    fetch('https://mindmix-api.onrender.com/blogs',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify(newPost)

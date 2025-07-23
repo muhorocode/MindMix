@@ -1,0 +1,24 @@
+{
+  "name": "mindmix",
+  "version": "1.0.0",
+  "description": "## Author ### Elijah Kamanga Full-Stack Software Engineering Student at Moringa School",
+  "main": "index.js",
+  "scripts": {
+    "start": "json-server --watch db.json --port 10000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhorocode/MindMix.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muhorocode/MindMix/issues"
+  },
+  "homepage": "https://github.com/muhorocode/MindMix#readme",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}
