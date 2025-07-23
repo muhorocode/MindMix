@@ -103,10 +103,21 @@ function displayBlogPosts(postsArray, container){
         ${post.imageUrl? `<img src="${post.imageUrl}" alt="Blog Image" style="width: 100%; max-height: 200px; object-fit: cover;">` : ''}
         <h3>${post.title}</h3>
         <p><strong>By:</strong> ${post.author} | <strong>Category:</strong>${post.category}</p>
-        <p>${post.content}</p>
+        <p class='post-content collapsed'>${post.content}</p>
+        <button class='read-more-btn'>Read More</button>
         <p><em>${post.date}</em></P>
         <button class='edit-btn'>Edit</button>
         <button class='delete-btn'>Delete</button>`
+
+
+    const readMoreBtn=card.querySelector('.read-more-btn')
+    const postContent=card.querySelector('.post-content')
+
+        readMoreBtn.addEventListener('click',()=>{
+         postContent.classList.toggle('expanded')
+         postContent.classList.toggle('collapsed')
+         readMoreBtn.textContent=postContent.classList.contains('expanded')?'Read less':'Read more'
+        })
 
         //edit button functionality
         const editbtn=card.querySelector('.edit-btn')
